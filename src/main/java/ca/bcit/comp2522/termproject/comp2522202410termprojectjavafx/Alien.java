@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 class Alien extends Polygon {
-    Alien(){
+    public Alien(){
         super(0.0, 4.0, 0.0, 12.0, 4.0, 16.0,
                 8.0, 16.0, 6.0, 24.0, 10.0, 24.0,
                 12.0, 16.0, 16.0, 16.0, 18.0, 24.0,
