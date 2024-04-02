@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Player {
 
-    private Rectangle shape;
+    private final Rectangle shape;
 
     public Player(double x, double y, double width, double height) {
         shape = new Rectangle(x, y, width, height);
