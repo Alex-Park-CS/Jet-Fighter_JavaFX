@@ -21,7 +21,7 @@ public class Alien extends Polygon {
     public static final double ALIEN_WIDTH = 28.0;
     public static final double ALIEN_HEIGHT = 24.0;
 
-    private static final double MAX_SPEED = 3.0;
+    private static final double MAX_SPEED = 7.0;
 
     private double speedX;
     private double speedY;
@@ -46,7 +46,7 @@ public class Alien extends Polygon {
         if (getTranslateX() < 0 || getTranslateX() + ALIEN_WIDTH > JetFighterMain.WIDTH) {
             speedX = -speedX;
         }
-        if (getTranslateY() < 0 || getTranslateY() + ALIEN_HEIGHT > JetFighterMain.HEIGHT) {
+        if (getTranslateY() < 0 || getTranslateY() + ALIEN_HEIGHT + 200 > JetFighterMain.HEIGHT) {
             speedY = -speedY;
         }
     }
