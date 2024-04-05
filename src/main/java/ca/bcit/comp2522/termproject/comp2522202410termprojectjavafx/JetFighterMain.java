@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -13,8 +14,8 @@ public class JetFighterMain {
 
     public static final int WIDTH = 1100;
     public static final int HEIGHT = 700;
-    private static final int PLAYER_WIDTH = 50;
-    private static final int PLAYER_HEIGHT = 20;
+    private static final int PLAYER_WIDTH = 100;
+    private static final int PLAYER_HEIGHT = 40;
     private static final int PLAYER_SPEED = 5;
 
     private final Pane root;
@@ -23,6 +24,9 @@ public class JetFighterMain {
     private boolean movingRight = false;
 
     private ArrayList<Alien> aliens;
+
+    private ArrayList<Projectile> alienProjectiles;
+    private ArrayList<Projectile> playerProjectiles;
     private Random random;
 
 
@@ -32,6 +36,8 @@ public class JetFighterMain {
         this.player = new Player(WIDTH / 2 - PLAYER_WIDTH / 2, HEIGHT - PLAYER_HEIGHT - 10, 30, 20);
         this.aliens = new ArrayList<>();
         this.random = new Random();
+        this.alienProjectiles = new ArrayList<>();
+        this.playerProjectiles = new ArrayList<>();
 
         root.getChildren().add(player.getShape());
 
@@ -48,6 +54,7 @@ public class JetFighterMain {
             public void handle(long now) {
                 movePlayer();
                 moveAliens();
+                checkCollisions();
             }
         }.start();
     }
@@ -83,14 +90,39 @@ public class JetFighterMain {
     }
 
     public void shootAlienProjectile() {
-        Alien randomAlien = aliens.get(random.nextInt(aliens.size()));
-        Projectile projectile = new Projectile(randomAlien.getTranslateX()
-                + Alien.ALIEN_WIDTH / 2 - (double) Projectile.WIDTH / 2,
-                randomAlien.getTranslateY() + Alien.ALIEN_HEIGHT,
-                Color.YELLOWGREEN);
-        root.getChildren().add(projectile.getShape());
-        projectile.moveDown();
+        if (!aliens.isEmpty()) {
+            Alien randomAlien = aliens.get(random.nextInt(aliens.size()));
+            Projectile projectile = new Projectile(randomAlien.getTranslateX()
+                    + Alien.ALIEN_WIDTH / 2 - (double) Projectile.WIDTH / 2,
+                    randomAlien.getTranslateY() + Alien.ALIEN_HEIGHT,
+                    Color.YELLOWGREEN);
+            alienProjectiles.add(projectile);
+            root.getChildren().add(projectile.getShape());
+            projectile.moveDown();
+        }
     }
+
+
+    private void checkCollisions() {
+        List<Projectile> projectilesToRemove = new ArrayList<>();
+        List<Alien> aliensToRemove = new ArrayList<>();
+
+        for (Projectile projectile : this.playerProjectiles) {
+            for (Alien alien : aliens) {
+                if (projectile.getShape().getBoundsInParent().intersects(alien.getBoundsInParent())) {
+                    root.getChildren().remove(alien);
+                    aliensToRemove.add(alien);
+                    projectilesToRemove.add(projectile);
+                    break;
+                }
+            }
+        }
+
+        this.aliens.removeAll(aliensToRemove);
+        this.alienProjectiles.removeAll(projectilesToRemove);
+    }
+
+
 
     private void movePlayer() {
         if (movingLeft && player.getX() > 0) {
@@ -113,6 +145,7 @@ public class JetFighterMain {
         Projectile projectile = new Projectile(player.getX() + player.getWidth() / 2 - Projectile.WIDTH / 2,
                 player.getY() - Projectile.HEIGHT,
                 Color.RED);
+        this.playerProjectiles.add(projectile);
         root.getChildren().add(projectile.getShape());
         projectile.move();
     }
