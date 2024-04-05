@@ -2,6 +2,8 @@ package ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -12,6 +14,11 @@ public class JetFighterDriver extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();
+
+
+        Image backgroundImage = new Image("background.jpg");
+        root.getChildren().add(new ImageView(backgroundImage));
+
         Scene scene = new Scene(root, 1100, 700, Color.BLACK);
 
         root.setFocusTraversable(true);
