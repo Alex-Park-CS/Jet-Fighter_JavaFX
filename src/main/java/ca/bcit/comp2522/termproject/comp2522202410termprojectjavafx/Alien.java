@@ -43,10 +43,10 @@ public class Alien extends Polygon {
         setTranslateY(getTranslateY() + speedY);
 
         // Reverse direction if hitting the edges
-        if (getTranslateX() < 0 || getTranslateX() + ALIEN_WIDTH > JetFighterMain.WIDTH) {
+        if (this.getTranslateX() < 0 || this.getTranslateX() + ALIEN_WIDTH > JetFighterMain.WIDTH) {
             speedX = -speedX;
         }
-        if (getTranslateY() < 0 || getTranslateY() + ALIEN_HEIGHT + 200 > JetFighterMain.HEIGHT) {
+        if (this.getTranslateY() < 10 || this.getTranslateY() + ALIEN_HEIGHT + 200 > JetFighterMain.HEIGHT) {
             speedY = -speedY;
         }
     }

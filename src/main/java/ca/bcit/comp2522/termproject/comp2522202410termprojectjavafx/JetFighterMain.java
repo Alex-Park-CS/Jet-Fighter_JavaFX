@@ -1,12 +1,15 @@
 package ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +23,7 @@ public class JetFighterMain {
 
     private final Pane root;
     private final Player player;
+    private int level;
     private boolean movingLeft = false;
     private boolean movingRight = false;
 
@@ -38,6 +42,7 @@ public class JetFighterMain {
         this.random = new Random();
         this.alienProjectiles = new ArrayList<>();
         this.playerProjectiles = new ArrayList<>();
+        this.level = 1;
 
         root.getChildren().add(player.getShape());
 
@@ -55,6 +60,7 @@ public class JetFighterMain {
                 movePlayer();
                 moveAliens();
                 checkCollisions();
+                checkLevel();
             }
         }.start();
     }
@@ -65,7 +71,7 @@ public class JetFighterMain {
 
             @Override
             public void handle(long now) {
-                if (now - lastShotTime >= 25_000_000_0L) {
+                if (now - lastShotTime >= 80_000_000_0L) {
                     shootAlienProjectile();
                     lastShotTime = now;
                 }
@@ -102,6 +108,12 @@ public class JetFighterMain {
         }
     }
 
+    private void checkLevel() {
+        if(this.aliens.isEmpty()){
+            this.level++;
+            createAliens();
+        }
+    }
 
     private void checkCollisions() {
         List<Projectile> projectilesToRemove = new ArrayList<>();
@@ -120,6 +132,7 @@ public class JetFighterMain {
 
         this.aliens.removeAll(aliensToRemove);
         this.alienProjectiles.removeAll(projectilesToRemove);
+
     }
 
 
