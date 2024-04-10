@@ -4,13 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class JetFighterDriver extends Application {
-
+    // drives the program
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();

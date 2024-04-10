@@ -11,12 +11,10 @@ public class Projectile {
     public static final int HEIGHT = 10;
     public static final int SPEED = 5;
 
-    private Rectangle shape;
-    private final Color projectileColor;
+    private final Rectangle shape;
 
     public Projectile(double x, double y, Color projColor) {
         shape = new Rectangle(x, y, WIDTH, HEIGHT);
-        projectileColor = projColor;
         shape.setFill(projColor);
     }
 

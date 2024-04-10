@@ -5,10 +5,7 @@ import javafx.scene.layout.Pane;
 
 public class Controller {
 
-    private JetFighterMain game;
-
     public Controller(JetFighterMain game, Pane root) {
-        this.game = game;
 
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.LEFT) {

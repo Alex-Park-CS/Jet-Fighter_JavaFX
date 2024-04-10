@@ -2,9 +2,6 @@ package ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import java.util.Random;
 
 public class Alien extends Polygon {
