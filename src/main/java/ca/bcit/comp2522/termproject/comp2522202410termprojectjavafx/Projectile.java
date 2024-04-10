@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
  * The Projectile class represents a projectile fired within the game.
  * It defines the properties and behavior of a projectile object, including its movement and appearance.
  */
-public class Projectile {
+public class Projectile implements Movement {
 
     public static final int WIDTH = 5;
     public static final int HEIGHT = 10;

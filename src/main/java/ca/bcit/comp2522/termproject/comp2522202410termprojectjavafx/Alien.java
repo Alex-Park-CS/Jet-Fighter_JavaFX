@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import java.util.Random;
@@ -8,7 +9,7 @@ import java.util.Random;
  * The Alien class represents an alien entity within the game.
  * It defines the properties and behavior of an alien object, including its shape, movement, and appearance.
  */
-public class Alien extends Polygon {
+public class Alien extends Polygon implements Movement {
 
     // The shape of the alien
     private static final double[] ALIEN_SHAPE = {
@@ -53,7 +54,7 @@ public class Alien extends Polygon {
      * Moves the alien based on its current speed.
      * If the alien reaches the edges of the screen, it reverses its direction.
      */
-    public void move() {
+    public void move(Pane root) {
         // Update position based on current speed
         setTranslateX(getTranslateX() + speedX);
         setTranslateY(getTranslateY() + speedY);
