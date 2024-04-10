@@ -7,6 +7,9 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+mvnw
+mvnw.cmd
+.mvn
 *.iws
 *.iml
 *.ipr
