@@ -1,16 +1,11 @@
 package ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -247,17 +242,16 @@ public class JetFighterMain {
         Text gameOverText = new Text("GAME OVER!!");
         gameOverText.setFill(Color.RED);
         gameOverText.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-        gameOverText.setX(WIDTH / 2 - 120);
-        gameOverText.setY(HEIGHT / 2);
+        gameOverText.setX((double) WIDTH / 2 - 120);
+        gameOverText.setY((double) HEIGHT / 2);
         root.getChildren().add(gameOverText);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public List<Alien> getAliens() {
-        return aliens;
-    }
+//    public Player getPlayer() {
+//        return player;
+//    }
+//
+//    public List<Alien> getAliens() {
+//        return aliens;
+//    }
 }
-
