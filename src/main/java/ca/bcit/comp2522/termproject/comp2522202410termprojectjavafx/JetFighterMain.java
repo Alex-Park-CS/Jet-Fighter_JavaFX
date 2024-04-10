@@ -7,6 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -24,26 +27,53 @@ public class JetFighterMain {
     private final Pane root;
     private final Player player;
     private int level;
+    private int lives;
+    private int killCount;
+    private final Text killCountText;
+    private final Text levelText;
+    private final Text livesText;
     private boolean movingLeft = false;
     private boolean movingRight = false;
 
-    private ArrayList<Alien> aliens;
+    private final ArrayList<Alien> aliens;
 
-    private ArrayList<Projectile> alienProjectiles;
-    private ArrayList<Projectile> playerProjectiles;
-    private Random random;
-
-
+    private final ArrayList<Projectile> alienProjectiles;
+    private final ArrayList<Projectile> playerProjectiles;
+    private final Random random;
 
     public JetFighterMain(Pane root) {
         this.root = root;
-        this.player = new Player(WIDTH / 2 - PLAYER_WIDTH / 2, HEIGHT - PLAYER_HEIGHT - 10, 30, 20);
+        this.player = new Player((double) WIDTH / 2 - (double) PLAYER_WIDTH / 2,
+                HEIGHT - PLAYER_HEIGHT - 10, 50, 40);
         this.aliens = new ArrayList<>();
         this.random = new Random();
         this.alienProjectiles = new ArrayList<>();
         this.playerProjectiles = new ArrayList<>();
         this.level = 1;
+        this.killCount = 0;
+        this.lives = 5;
 
+        this.killCountText = new Text("Aliens Killed: " + killCount);
+        killCountText.setFill(Color.YELLOW);
+        killCountText.setTranslateX(915);
+        killCountText.setTranslateY(20);
+        killCountText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        this.levelText = new Text("Level: " + level);
+        levelText.setFill(Color.YELLOW);
+        levelText.setTranslateX(0);
+        levelText.setTranslateY(20);
+        levelText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        this.livesText = new Text("Lives: " + lives);
+        livesText.setFill(Color.YELLOW);
+        livesText.setTranslateX(0);
+        livesText.setTranslateY(550);
+        livesText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        root.getChildren().add(killCountText);
+        root.getChildren().add(levelText);
+        root.getChildren().add(livesText);
         root.getChildren().add(player.getShape());
 
         createAliens();
@@ -61,6 +91,8 @@ public class JetFighterMain {
                 moveAliens();
                 checkCollisions();
                 checkLevel();
+                updateKillCount();
+                checkCollisionsPlayer();
             }
         }.start();
     }
@@ -79,9 +111,21 @@ public class JetFighterMain {
         };
         shootingTimer.start();
     }
+    private void updateKillCount() {
+        this.killCountText.setText("Aliens Killed: " + this.killCount);
+    }
+
+    private void updateLevelCount() {
+        this.levelText.setText("Level: " + this.level);
+    }
+
+    private void updateLives() {
+        this.livesText.setText("Lives: " + this.lives);
+    }
 
     private void createAliens() {
-        for (int i = 0; i < 5; i++) {
+        // update level every time create alien is called
+        for (int i = 0; i < this.level * 2; i++) {
             Alien alien = new Alien(random.nextDouble() * (WIDTH - Alien.ALIEN_WIDTH),
                     random.nextDouble() * (HEIGHT - Alien.ALIEN_HEIGHT - 200));
             aliens.add(alien);
@@ -111,6 +155,7 @@ public class JetFighterMain {
     private void checkLevel() {
         if(this.aliens.isEmpty()){
             this.level++;
+            updateLevelCount();
             createAliens();
         }
     }
@@ -122,18 +167,34 @@ public class JetFighterMain {
         for (Projectile projectile : this.playerProjectiles) {
             for (Alien alien : aliens) {
                 if (projectile.getShape().getBoundsInParent().intersects(alien.getBoundsInParent())) {
+                    this.killCount++;
                     root.getChildren().remove(alien);
                     aliensToRemove.add(alien);
                     projectilesToRemove.add(projectile);
-                    break;
+                    break; // Exit the inner loop after detecting a collision
                 }
             }
         }
-
         this.aliens.removeAll(aliensToRemove);
-        this.alienProjectiles.removeAll(projectilesToRemove);
-
+        this.playerProjectiles.removeAll(projectilesToRemove);
+        updateKillCount();
     }
+
+    private void checkCollisionsPlayer() {
+        List<Projectile> projectilesToRemove = new ArrayList<>();
+
+        for (Projectile projectile : this.alienProjectiles) {
+            if (projectile.getShape().getBoundsInParent().
+                    intersects(player.getBoundsInParent())){
+                lives--;
+                projectilesToRemove.add(projectile);
+                break; // Exit the inner loop after detecting a collision
+            }
+        }
+        this.alienProjectiles.removeAll(projectilesToRemove);
+        updateLives();
+    }
+
 
 
 
@@ -155,7 +216,7 @@ public class JetFighterMain {
     }
 
     public void shootProjectile() {
-        Projectile projectile = new Projectile(player.getX() + player.getWidth() / 2 - Projectile.WIDTH / 2,
+        Projectile projectile = new Projectile(player.getX() + player.getWidth() / 2 - (double) Projectile.WIDTH / 2,
                 player.getY() - Projectile.HEIGHT,
                 Color.RED);
         this.playerProjectiles.add(projectile);

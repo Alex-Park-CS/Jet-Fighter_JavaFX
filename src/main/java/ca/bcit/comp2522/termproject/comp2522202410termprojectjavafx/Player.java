@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -14,6 +15,10 @@ public class Player {
         shape.setY(y);
         shape.setFitWidth(width);
         shape.setFitHeight(height);
+    }
+
+    public Bounds getBoundsInParent() {
+        return shape.getBoundsInParent();
     }
 
     public ImageView getShape() {
