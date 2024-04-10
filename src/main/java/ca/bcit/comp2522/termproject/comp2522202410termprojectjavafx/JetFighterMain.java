@@ -39,12 +39,14 @@ public class JetFighterMain {
 
     private final ArrayList<Projectile> alienProjectiles;
     private final ArrayList<Projectile> playerProjectiles;
+    private AnimationTimer gameLoop;
+    private AnimationTimer shootingTimer;
     private final Random random;
 
     public JetFighterMain(Pane root) {
         this.root = root;
         this.player = new Player((double) WIDTH / 2 - (double) PLAYER_WIDTH / 2,
-                HEIGHT - PLAYER_HEIGHT - 10, 50, 40);
+                HEIGHT - PLAYER_HEIGHT - 30, 70, 70);
         this.aliens = new ArrayList<>();
         this.random = new Random();
         this.alienProjectiles = new ArrayList<>();
@@ -84,7 +86,7 @@ public class JetFighterMain {
     }
 
     private void startGameLoop() {
-        new AnimationTimer() {
+        gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 movePlayer();
@@ -94,11 +96,12 @@ public class JetFighterMain {
                 updateKillCount();
                 checkCollisionsPlayer();
             }
-        }.start();
+        };
+        gameLoop.start();
     }
 
     private void startShootingAlienProjectileTimer() {
-        AnimationTimer shootingTimer = new AnimationTimer() {
+        shootingTimer = new AnimationTimer() {
             private long lastShotTime = 0;
 
             @Override
@@ -148,7 +151,7 @@ public class JetFighterMain {
                     Color.YELLOWGREEN);
             alienProjectiles.add(projectile);
             root.getChildren().add(projectile.getShape());
-            projectile.moveDown();
+            projectile.moveDown(root);
         }
     }
 
@@ -170,6 +173,7 @@ public class JetFighterMain {
                     this.killCount++;
                     root.getChildren().remove(alien);
                     aliensToRemove.add(alien);
+                    root.getChildren().remove(projectile.getShape());
                     projectilesToRemove.add(projectile);
                     break; // Exit the inner loop after detecting a collision
                 }
@@ -187,7 +191,13 @@ public class JetFighterMain {
             if (projectile.getShape().getBoundsInParent().
                     intersects(player.getBoundsInParent())){
                 lives--;
+                root.getChildren().remove(projectile.getShape());
                 projectilesToRemove.add(projectile);
+                if(lives == 0){
+                    stopGame();
+                    stopProjectile();
+                    printGameOver();
+                }
                 break; // Exit the inner loop after detecting a collision
             }
         }
@@ -195,8 +205,17 @@ public class JetFighterMain {
         updateLives();
     }
 
+    private void stopGame() {
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
+    }
 
-
+    private void stopProjectile() {
+        if (gameLoop != null) {
+            shootingTimer.stop();
+        }
+    }
 
     private void movePlayer() {
         if (movingLeft && player.getX() > 0) {
@@ -221,7 +240,16 @@ public class JetFighterMain {
                 Color.RED);
         this.playerProjectiles.add(projectile);
         root.getChildren().add(projectile.getShape());
-        projectile.move();
+        projectile.move(root);
+    }
+
+    private void printGameOver() {
+        Text gameOverText = new Text("GAME OVER!!");
+        gameOverText.setFill(Color.RED);
+        gameOverText.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+        gameOverText.setX(WIDTH / 2 - 120);
+        gameOverText.setY(HEIGHT / 2);
+        root.getChildren().add(gameOverText);
     }
 
     public Player getPlayer() {

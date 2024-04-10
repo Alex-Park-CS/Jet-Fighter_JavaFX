@@ -24,30 +24,29 @@ public class Projectile {
         return shape;
     }
 
-    public void move() {
+    public void move(Pane root) {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
                 shape.setY(shape.getY() - SPEED);
                 if (shape.getY() < 0) {
-                    ((Pane) shape.getParent()).getChildren().remove(shape);
+                    root.getChildren().remove(shape);
                     this.stop();
                 }
             }
         }.start();
     }
 
-    public void moveDown() {
+    public void moveDown(Pane root) {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
                 shape.setY(shape.getY() + SPEED - 1);
-                if (shape.getY() < 0) {
-                    ((Pane) shape.getParent()).getChildren().remove(shape);
+                if (shape.getY() > root.getHeight()) {
+                    root.getChildren().remove(shape);
                     this.stop();
                 }
             }
         }.start();
-
     }
 }
