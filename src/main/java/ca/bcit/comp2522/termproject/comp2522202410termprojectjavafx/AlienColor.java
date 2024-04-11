@@ -8,5 +8,6 @@ public enum AlienColor{
     PURPLE,
     GREEN,
     YELLOW,
-    BLUE
+    BLUE,
+    RED
 }

@@ -83,6 +83,7 @@ public class Alien extends Polygon implements Movement {
             case BLUE -> Color.BLUE;
             case YELLOW -> Color.YELLOW;
             case PURPLE -> Color.PURPLE;
+            case RED -> Color.RED;
             default -> Color.BLACK;
         };
     }
