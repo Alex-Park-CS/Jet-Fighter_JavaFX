@@ -31,6 +31,8 @@ public class Alien extends Polygon implements Movement {
     private double speedX; // The horizontal speed of the alien
     private double speedY; // The vertical speed of the alien
 
+    private AlienColor alienColor;
+
     /**
      * Constructs an Alien object with the specified position.
      *
@@ -39,10 +41,12 @@ public class Alien extends Polygon implements Movement {
      */
     public Alien(double x, double y) {
         super(ALIEN_SHAPE);
+        this.alienColor = getRandomColor();
         setTranslateX(x);
         setTranslateY(y);
         setStrokeWidth(2);
         setStroke(Color.WHITE);
+        setFill(getColor());
 
         Random random = new Random();
         // Randomize initial speeds within the maximum speed range
@@ -66,5 +70,20 @@ public class Alien extends Polygon implements Movement {
         if (this.getTranslateY() < 10 || this.getTranslateY() + ALIEN_HEIGHT + 200 > JetFighterMain.HEIGHT) {
             speedY = -speedY;
         }
+    }
+
+    private AlienColor getRandomColor() {
+        AlienColor[] colors = AlienColor.values();
+        return colors[new Random().nextInt(colors.length)];
+    }
+
+    public Color getColor() {
+        return switch (alienColor) {
+            case GREEN -> Color.LIGHTGREEN;
+            case BLUE -> Color.BLUE;
+            case YELLOW -> Color.YELLOW;
+            case PURPLE -> Color.PURPLE;
+            default -> Color.BLACK;
+        };
     }
 }

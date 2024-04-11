@@ -59,7 +59,7 @@ public class JetFighterMain {
     public JetFighterMain(Pane root) {
         this.root = root;
         this.player = new Player((double) WIDTH / 2 - (double) PLAYER_WIDTH / 2,
-                HEIGHT - PLAYER_HEIGHT - 30, 70, 70);
+                HEIGHT - PLAYER_HEIGHT - 60, 100, 100);
         this.aliens = new ArrayList<>();
         this.random = new Random();
         this.alienProjectiles = new ArrayList<>();
@@ -177,7 +177,7 @@ public class JetFighterMain {
      */
     private void moveAliens() {
         for (Alien alien : aliens) {
-            alien.move();
+            alien.move(root);
         }
     }
 
