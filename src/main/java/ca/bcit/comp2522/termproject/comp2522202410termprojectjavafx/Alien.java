@@ -31,7 +31,7 @@ public class Alien extends Polygon implements Movement {
     private double speedX; // The horizontal speed of the alien
     private double speedY; // The vertical speed of the alien
 
-    private AlienColor alienColor;
+    private final AlienColor alienColor;
 
     /**
      * Constructs an Alien object with the specified position.
