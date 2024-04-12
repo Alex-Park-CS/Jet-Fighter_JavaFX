@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TestAlien {
     @Test
-    public void testConstructorAndGetColor() {
+    public void createAlien() {
         Alien alien = new Alien(50, 50);
 
         assertEquals(50, alien.getTranslateX(), 0.001);
