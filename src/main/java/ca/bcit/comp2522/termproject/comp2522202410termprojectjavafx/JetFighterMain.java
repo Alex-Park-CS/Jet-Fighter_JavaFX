@@ -96,62 +96,6 @@ public class JetFighterMain {
         new Controller(this, root);
     }
 
-    public Pane getRoot() {
-        return root;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getLives() {
-        return lives;
-    }
-
-    public void setLives(int lives) {
-        this.lives = lives;
-    }
-
-    public int getKillCount() {
-        return killCount;
-    }
-
-    public void setKillCount(int killCount) {
-        this.killCount = killCount;
-    }
-
-    public Text getKillCountText() {
-        return killCountText;
-    }
-
-    public Text getLevelText() {
-        return levelText;
-    }
-
-    public Text getLivesText() {
-        return livesText;
-    }
-
-    public boolean isMovingLeft() {
-        return movingLeft;
-    }
-
-    public boolean isMovingRight() {
-        return movingRight;
-    }
-
-    public ArrayList<Alien> getAliens() {
-        return aliens;
-    }
-
     /**
      * Starts the game loop, which handles the continuous updates and rendering of the game.
      * The game loop calls methods to move the player, move aliens, check collisions,

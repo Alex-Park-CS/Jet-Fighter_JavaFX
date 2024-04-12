@@ -1,6 +1,5 @@
 import ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx.Projectile;
 
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.testng.annotations.Test;

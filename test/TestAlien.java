@@ -1,10 +1,6 @@
 import ca.bcit.comp2522.termproject.comp2522202410termprojectjavafx.Alien;
 
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.Test;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
