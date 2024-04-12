@@ -7,9 +7,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * The main class of Jet Fighter game
@@ -340,12 +338,7 @@ public class JetFighterMain {
         root.getChildren().add(gameOverText);
     }
 
-
-//    public Player getPlayer() {
-//        return player;
-//    }
-//
-//    public List<Alien> getAliens() {
-//        return aliens;
-//    }
+    public Collection<Object> getAlienProjectiles() {
+        return Collections.singleton(this.alienProjectiles);
+    }
 }
